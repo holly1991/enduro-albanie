@@ -339,6 +339,19 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
   <div class="sec-lbl">Het belangrijkste</div>
   <div class="sec-ttl">Bier Command Center</div>
 
+  <div style="background:linear-gradient(135deg,#f5f5f5,#fff3e0);border:2px dashed var(--ac);border-radius:12px;padding:1.1rem;text-align:center;margin-bottom:1rem">
+    <div style="font-size:2rem;margin-bottom:.3rem">🦵😭🍺</div>
+    <div style="font-family:'Archivo Black',sans-serif;font-size:1rem;color:var(--ac);margin-bottom:.4rem">In loving memory of Gideons knie</div>
+    <div style="font-size:.85rem;color:var(--tx2);line-height:1.6">
+      <b>Gideon</b> kan er helaas niet bij zijn — geopereerd aan z'n knie. Terwijl wij door Albanië crossen, ligt hij thuis op de bank met een ijszak en jaloezie.<br><br>
+      Elke avond heffen wij het eerste biertje op Gideons knie. <b>Gëzuar, Gideon!</b>
+    </div>
+    <div id="gideonTeller" style="margin-top:.7rem;font-family:'Archivo Black',sans-serif;font-size:.85rem;color:var(--ac)">
+      🍺 Troostbiertjes voor Gideon: <span id="gideonCount">0</span>
+    </div>
+    <button onclick="gideonBier()" style="margin-top:.5rem;padding:.45rem 1.2rem;background:var(--ac);color:#fff;border:none;border-radius:99px;font-weight:700;font-size:.82rem;cursor:pointer">Proost op Gideon! 🍻</button>
+  </div>
+
   <div class="al gn">
     <span class="al-i">🍺</span>
     <div><b>Albanees bier = verrassend goed + goedkoop!</b> Korça en Tirana zijn de lokale favorieten. Reken op ~€1-1.50 per pul. Je portemonnee gaat het overleven, je lever misschien niet.</div>
@@ -361,6 +374,21 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
         <div id="schaamteTxt" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5)">Nog nuchter... boring!</div>
       </div>
     </div>
+  </div>
+
+  <div style="margin:1rem 0;background:linear-gradient(135deg,#1a1a1a,#333);border-radius:12px;padding:1.1rem;text-align:center;color:#fff">
+    <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:#aaa;margin-bottom:.3rem">Countdown tot vertrek</div>
+    <div id="countdown" style="font-family:'Archivo Black',sans-serif;font-size:1.6rem;color:#ff7043"></div>
+    <div id="countdownSub" style="font-size:.78rem;color:#aaa;margin-top:.25rem"></div>
+  </div>
+
+  <div class="sec-ttl" style="margin-top:1.2rem;font-size:1.1rem">Dagelijkse Awards</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.2rem">
+    <div class="inf" style="text-align:center;margin:0"><h4 style="justify-content:center">🤡 Clown v/d Dag</h4><p>Meest beschamende actie. Draagt morgen de schaamte-pet.</p></div>
+    <div class="inf" style="text-align:center;margin:0"><h4 style="justify-content:center">🐐 GOAT v/d Dag</h4><p>Beste rider. Kiest het restaurant vanavond.</p></div>
+    <div class="inf" style="text-align:center;margin:0"><h4 style="justify-content:center">💤 Slaapkop</h4><p>Wie het eerst in slaap valt. Wordt getekend op z'n gezicht.</p></div>
+    <div class="inf" style="text-align:center;margin:0"><h4 style="justify-content:center">🤮 Held v/d Nacht</h4><p>Wie het meeste drinkt en toch de volgende ochtend op de motor zit.</p></div>
   </div>
 
   <div class="sec-ttl" style="margin-top:1.2rem;font-size:1.1rem">Drink-regels</div>
@@ -390,6 +418,26 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
     <p>Wie meer dan 5 minuten bezig is met een Instagram-foto: shotje raki. De Albanezen lachen je toch al uit.</p>
   </div>
 
+  <div class="inf">
+    <h4>📱 Regel 7: De Whatsapper</h4>
+    <p>Wie een bericht stuurt naar z'n vriendin met "ik mis je" terwijl de jongens erbij zijn: ad fundum + voorlezen in de groep.</p>
+  </div>
+  <div class="inf">
+    <h4>🛏️ Regel 8: De Snurker</h4>
+    <p>Wie het hardst snurkt slaapt de volgende nacht op het balkon. Of koopt ontbijt voor de hele groep.</p>
+  </div>
+  <div class="inf">
+    <h4>🦵 Regel 9: De Gideon</h4>
+    <p>Wie klaagt over pijntjes krijgt te horen: "Gideon heeft z'n hele knie laten vervangen en jij zeurt over een blaar?" Shotje raki.</p>
+  </div>
+
+  <div style="margin:1rem 0;background:linear-gradient(135deg,#fff3e0,#fce4ec);border:1px solid var(--bd);border-radius:12px;padding:1.1rem;text-align:center">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:.95rem;color:var(--ac);margin-bottom:.5rem">🎰 Random Straf Generator</div>
+    <div style="font-size:.82rem;color:var(--tx3);margin-bottom:.5rem">Discussie over wie er straf krijgt? Laat het lot beslissen.</div>
+    <div id="strResult" style="font-size:1rem;font-weight:700;color:var(--tx);min-height:1.5rem;margin-bottom:.5rem"></div>
+    <button onclick="randomStraf()" style="padding:.5rem 1.5rem;background:var(--ac);color:#fff;border:none;border-radius:99px;font-weight:700;font-size:.85rem;cursor:pointer">🎲 Draai!</button>
+  </div>
+
   <div class="al yl" style="margin-top:.75rem">
     <span class="al-i">⚠️</span>
     <div><b>Reminder:</b> Albanië heeft 0,01‰ nultolerantie. Dus: EERST rijden, DAN zuipen. Andersom = Albanese gevangenis en die serveert geen Korça.</div>
@@ -405,18 +453,6 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
 
   <div class="tip"><b>🏆 End-of-trip award:</b> Wie de meeste biertjes drinkt EN elke dag op de motor zit, wint de titel "Enduro Bier Kampioen Albanië 2026" en een kroon van lege blikjes.</div>
 
-  <div style="margin-top:1.2rem;background:linear-gradient(135deg,#f5f5f5,#fff3e0);border:2px dashed var(--ac);border-radius:12px;padding:1.1rem;text-align:center">
-    <div style="font-size:2rem;margin-bottom:.3rem">🦵😭🍺</div>
-    <div style="font-family:'Archivo Black',sans-serif;font-size:1rem;color:var(--ac);margin-bottom:.4rem">In loving memory of Gideons knie</div>
-    <div style="font-size:.85rem;color:var(--tx2);line-height:1.6">
-      <b>Gideon</b> kan er helaas niet bij zijn — geopereerd aan z'n knie. Terwijl wij door Albanië crossen, ligt hij thuis op de bank met een ijszak en jaloezie.<br><br>
-      Elke avond heffen wij het eerste biertje op Gideons knie. <b>Gëzuar, Gideon!</b>
-    </div>
-    <div id="gideonTeller" style="margin-top:.7rem;font-family:'Archivo Black',sans-serif;font-size:.85rem;color:var(--ac)">
-      🍺 Troostbiertjes voor Gideon: <span id="gideonCount">0</span>
-    </div>
-    <button onclick="gideonBier()" style="margin-top:.5rem;padding:.45rem 1.2rem;background:var(--ac);color:#fff;border:none;border-radius:99px;font-weight:700;font-size:.82rem;cursor:pointer">Proost op Gideon! 🍻</button>
-  </div>
 </div>
 
 <!-- ===== NOOD ===== -->
@@ -568,6 +604,44 @@ document.getElementById('gideonCount').textContent=gideonCount;
 const style=document.createElement('style');
 style.textContent='@keyframes fadeUp{0%{opacity:0;transform:translateX(-50%) translateY(20px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}';
 document.head.appendChild(style);
+
+// === COUNTDOWN ===
+function updateCountdown(){
+  const dep=new Date('2026-04-10T06:00:00');
+  const now=new Date();
+  const diff=dep-now;
+  const el=document.getElementById('countdown');
+  const sub=document.getElementById('countdownSub');
+  if(!el)return;
+  if(diff<=0){el.textContent='WE ZIJN ONDERWEG! 🏍️🇦🇱';sub.textContent='Albanië here we come!';return;}
+  const d=Math.floor(diff/864e5);
+  const h=Math.floor((diff%864e5)/36e5);
+  const m=Math.floor((diff%36e5)/6e4);
+  const s=Math.floor((diff%6e4)/1e3);
+  el.textContent=d+'d '+h+'u '+m+'m '+s+'s';
+  const msgs=['Nog even volhouden jongens!','Gideon telt ook mee vanuit de bank','Begin alvast met trainen (bier drinken)','Zorg dat je lever er klaar voor is','Albanië weet nog niet wat er aankomt'];
+  sub.textContent=msgs[d%msgs.length];
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// === RANDOM STRAF ===
+function randomStraf(){
+  const namen=['Remco','AJ','Ruben','Danny','Jasper','William'];
+  const straffen=[
+    'moet een ad fundum doen 🍺','moet een shotje raki drinken 🔥','moet het volgende rondje bestellen 💸',
+    'moet een Albanees volkslied zingen 🎤','moet 10 push-ups doen 💪','moet de hele avond Albanees praten 🇦🇱',
+    'moet Gideon een voice-bericht sturen over hoe leuk het is 😈','moet morgen de route bepalen 🗺️',
+    'mag pas een biertje als iemand anders z\'n biertje op heeft ⏳','moet een selfie met een local maken 🤳',
+    'moet een compliment geven aan elke rider 🥰','mag 30 min z\'n telefoon niet aanraken 📵',
+    'moet raki bestellen voor de hele tafel 💀','moet een toast uitbrengen op Gideons knie 🦵'
+  ];
+  const naam=namen[Math.floor(Math.random()*namen.length)];
+  const straf=straffen[Math.floor(Math.random()*straffen.length)];
+  const el=document.getElementById('strResult');
+  el.style.transition='none';el.style.opacity='0';
+  setTimeout(()=>{el.textContent='👉 '+naam+' '+straf;el.style.transition='opacity .3s';el.style.opacity='1';},100);
+}
 
 renderTellers();
 updateSchaamte();
