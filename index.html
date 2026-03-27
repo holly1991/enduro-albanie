@@ -102,6 +102,7 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
   <div class="hdr-badge">🏍️ 10 — 17 APRIL 2026</div>
   <h1>ENDURO<br><span>ALBANIË</span></h1>
   <div class="hdr-meta"><b>Remco · AJ · Ruben · Danny · Jasper · William</b></div>
+  <div class="hdr-meta" style="font-size:.78rem;color:var(--tx3)"><s>Gideon</s> <span style="font-size:.7rem">🦵 kapotte knie, beterschap!</span></div>
   <div class="hdr-meta">Düsseldorf → Tirana · <b>1 week</b></div>
   <div class="hdr-sub">🎒 Backpack-only editie</div>
   <div class="hdr-sub" style="background:#fff8e1;border-color:#ffd54f;color:#e65100">🍺 Biertjes gedronken: <span id="bierTotal" style="font-family:'Archivo Black',sans-serif;font-size:1rem">0</span></div>
@@ -403,6 +404,19 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
   </div>
 
   <div class="tip"><b>🏆 End-of-trip award:</b> Wie de meeste biertjes drinkt EN elke dag op de motor zit, wint de titel "Enduro Bier Kampioen Albanië 2026" en een kroon van lege blikjes.</div>
+
+  <div style="margin-top:1.2rem;background:linear-gradient(135deg,#f5f5f5,#fff3e0);border:2px dashed var(--ac);border-radius:12px;padding:1.1rem;text-align:center">
+    <div style="font-size:2rem;margin-bottom:.3rem">🦵😭🍺</div>
+    <div style="font-family:'Archivo Black',sans-serif;font-size:1rem;color:var(--ac);margin-bottom:.4rem">In loving memory of Gideons knie</div>
+    <div style="font-size:.85rem;color:var(--tx2);line-height:1.6">
+      <b>Gideon</b> kan er helaas niet bij zijn — geopereerd aan z'n knie. Terwijl wij door Albanië crossen, ligt hij thuis op de bank met een ijszak en jaloezie.<br><br>
+      Elke avond heffen wij het eerste biertje op Gideons knie. <b>Gëzuar, Gideon!</b>
+    </div>
+    <div id="gideonTeller" style="margin-top:.7rem;font-family:'Archivo Black',sans-serif;font-size:.85rem;color:var(--ac)">
+      🍺 Troostbiertjes voor Gideon: <span id="gideonCount">0</span>
+    </div>
+    <button onclick="gideonBier()" style="margin-top:.5rem;padding:.45rem 1.2rem;background:var(--ac);color:#fff;border:none;border-radius:99px;font-weight:700;font-size:.82rem;cursor:pointer">Proost op Gideon! 🍻</button>
+  </div>
 </div>
 
 <!-- ===== NOOD ===== -->
@@ -532,6 +546,28 @@ function updateSchaamte(){
   document.getElementById('schaamteFill').style.width=pct+'%';
   document.getElementById('schaamteTxt').textContent=msg;
 }
+
+// === GIDEON TROOSTBIERTJES ===
+const GIDEON_KEY='eab3-gideon';
+let gideonCount=parseInt(localStorage.getItem(GIDEON_KEY)||'0');
+function gideonBier(){
+  gideonCount++;
+  localStorage.setItem(GIDEON_KEY,gideonCount);
+  document.getElementById('gideonCount').textContent=gideonCount;
+  const msgs=['Gëzuar Gideon! 🍻','Sterkte met die knie! 🦵','Volgende keer ben jij erbij! 💪','Gideon, we missen je! 😢🍺','Eentje voor de knie! 🦵🍺','Gideon zou hier zo hard lachen 😂'];
+  const msg=msgs[Math.floor(Math.random()*msgs.length)];
+  const toast=document.createElement('div');
+  toast.textContent=msg;
+  toast.style.cssText='position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;padding:.7rem 1.4rem;border-radius:99px;font-weight:700;font-size:.88rem;z-index:999;animation:fadeUp 2s forwards;white-space:nowrap';
+  document.body.appendChild(toast);
+  setTimeout(()=>toast.remove(),2200);
+}
+document.getElementById('gideonCount').textContent=gideonCount;
+
+// toast animation
+const style=document.createElement('style');
+style.textContent='@keyframes fadeUp{0%{opacity:0;transform:translateX(-50%) translateY(20px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}';
+document.head.appendChild(style);
 
 renderTellers();
 updateSchaamte();
