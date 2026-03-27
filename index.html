@@ -101,22 +101,23 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
 <header class="hdr">
   <div class="hdr-badge">🏍️ 10 — 17 APRIL 2026</div>
   <h1>ENDURO<br><span>ALBANIË</span></h1>
-  <div class="hdr-meta"><b>6 man</b> · Düsseldorf → Tirana · <b>1 week</b></div>
+  <div class="hdr-meta"><b>Remco · AJ · Ruben · Danny · Jasper · William</b></div>
+  <div class="hdr-meta">Düsseldorf → Tirana · <b>1 week</b></div>
   <div class="hdr-sub">🎒 Backpack-only editie</div>
   <div class="hdr-sub" style="background:#fff8e1;border-color:#ffd54f;color:#e65100">🍺 Biertjes gedronken: <span id="bierTotal" style="font-family:'Archivo Black',sans-serif;font-size:1rem">0</span></div>
 </header>
 
 <nav class="tabs" id="tabs">
-  <a class="tab on" data-s="paklijst">✅ Paklijst</a>
+  <a class="tab on" data-s="bier">🍺 Bier</a>
+  <a class="tab" data-s="paklijst">✅ Paklijst</a>
   <a class="tab" data-s="docs">📄 Docs</a>
   <a class="tab" data-s="regels">⚖️ Regels</a>
   <a class="tab" data-s="tips">💡 Tips</a>
-  <a class="tab" data-s="bier">🍺 Bier</a>
   <a class="tab" data-s="nood">🆘 Nood</a>
 </nav>
 
 <!-- ===== PAKLIJST ===== -->
-<div class="sec vis" id="paklijst">
+<div class="sec" id="paklijst">
   <div class="sec-lbl">Paklijst</div>
   <div class="sec-ttl">Alles in 1 rugtas</div>
 
@@ -333,7 +334,7 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
 </div>
 
 <!-- ===== BIER ===== -->
-<div class="sec" id="bier">
+<div class="sec vis" id="bier">
   <div class="sec-lbl">Het belangrijkste</div>
   <div class="sec-ttl">Bier Command Center</div>
 
@@ -446,7 +447,7 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
 
 <script>
 const tabs=document.querySelectorAll('.tab');
-const ids=['paklijst','docs','regels','tips','bier','nood'];
+const ids=['bier','paklijst','docs','regels','tips','nood'];
 tabs.forEach(t=>{
   t.addEventListener('click',()=>{
     tabs.forEach(x=>x.classList.remove('on'));
@@ -471,7 +472,10 @@ up();
 
 // === BIER TELLER ===
 const BIER_KEY='eab3-bier';
-let riders=JSON.parse(localStorage.getItem(BIER_KEY)||'{}');
+const DEFAULT_RIDERS=['Remco','AJ','Ruben','Danny','Jasper','William'];
+let riders=JSON.parse(localStorage.getItem(BIER_KEY)||'null');
+if(!riders){riders={};DEFAULT_RIDERS.forEach(n=>riders[n]=0);saveRiders();}
+DEFAULT_RIDERS.forEach(n=>{if(!(n in riders)){riders[n]=0;}});
 
 function saveRiders(){localStorage.setItem(BIER_KEY,JSON.stringify(riders));renderTellers();updateSchaamte();}
 
