@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enduro Albanië — Tripinfo</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;
+  --s1:#f5f5f5;
+  --s2:#eaeaea;
+  --ac:#d84315;
+  --ac2:#bf360c;
+  --gn:#2e7d32;
+  --bl:#1565c0;
+  --yl:#f57f17;
+  --rd:#c62828;
+  --tx:#1a1a1a;
+  --tx2:#444444;
+  --tx3:#666666;
+  --bd:#d5d5d5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+.hdr{text-align:center;padding:2.5rem 1.25rem 1.75rem;background:linear-gradient(165deg,rgba(216,67,21,.06) 0%,transparent 50%),var(--bg);border-bottom:1px solid var(--bd)}
+.hdr-badge{display:inline-block;background:rgba(216,67,21,.1);border:1px solid rgba(216,67,21,.25);padding:.3rem 1rem;border-radius:99px;font-size:.75rem;font-weight:700;color:var(--ac);letter-spacing:.06em;margin-bottom:.75rem}
+.hdr h1{font-family:'Archivo Black',sans-serif;font-size:2.2rem;line-height:.95;letter-spacing:-.02em;color:var(--tx)}
+.hdr h1 span{color:var(--ac)}
+.hdr-meta{margin-top:.75rem;font-size:.88rem;color:var(--tx2)}
+.hdr-meta b{color:var(--tx)}
+.hdr-sub{margin-top:.6rem;display:inline-flex;align-items:center;gap:.4rem;background:var(--s1);border:1px solid var(--bd);padding:.35rem .85rem;border-radius:99px;font-size:.74rem;color:var(--yl);font-weight:700}
+
+.tabs{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:2px solid var(--bd);display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;padding:.85rem 1rem;font-size:.8rem;font-weight:700;color:var(--tx3);border-bottom:3px solid transparent;white-space:nowrap;cursor:pointer;transition:.2s;-webkit-tap-highlight-color:transparent}
+.tab.on{color:var(--ac);border-bottom-color:var(--ac)}
+.tab:hover{color:var(--ac)}
+
+.sec{padding:1.75rem 1.25rem;display:none}
+.sec.vis{display:block}
+.sec-lbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ac);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.35rem;font-weight:500}
+.sec-ttl{font-family:'Archivo Black',sans-serif;font-size:1.35rem;letter-spacing:-.01em;margin-bottom:1.1rem;color:var(--tx)}
+
+/* Alerts */
+.al{display:flex;gap:.65rem;padding:.9rem 1rem;border-radius:10px;margin-bottom:.75rem;font-size:.85rem;line-height:1.6;align-items:flex-start;color:var(--tx)}
+.al b{color:var(--tx)}
+.al.rd{background:#fef2f2;border:1px solid #fca5a5}
+.al.yl{background:#fffbeb;border:1px solid #fcd34d}
+.al.bl{background:#eff6ff;border:1px solid #93c5fd}
+.al.gn{background:#f0fdf4;border:1px solid #86efac}
+.al-i{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+
+/* Checklist */
+.clg{margin-bottom:1.4rem}
+.clg h3{font-size:.92rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem;color:var(--tx)}
+.cl{display:flex;flex-direction:column;gap:.4rem}
+.ci{display:flex;align-items:center;gap:.6rem;padding:.55rem .75rem;background:var(--s1);border:1px solid var(--bd);border-radius:8px;font-size:.87rem;cursor:pointer;user-select:none;transition:.15s;-webkit-tap-highlight-color:transparent;color:var(--tx)}
+.ci:active{transform:scale(.98)}
+.ci input{display:none}
+.cb{width:19px;height:19px;border:2px solid #aaa;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:transparent;transition:.15s}
+.ci input:checked~.cb{background:var(--ac);border-color:var(--ac);color:#fff}
+.ci input:checked~.ct{text-decoration:line-through;color:#999}
+.ct{flex:1;color:var(--tx)}
+.ch{font-size:.72rem;color:var(--tx3);margin-left:auto;white-space:nowrap;padding-left:.5rem;font-style:italic}
+
+/* Info cards */
+.inf{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:.95rem 1rem;margin-bottom:.65rem}
+.inf h4{font-size:.9rem;font-weight:700;margin-bottom:.35rem;display:flex;align-items:center;gap:.4rem;color:var(--tx)}
+.inf p{font-size:.85rem;color:var(--tx2);line-height:1.65}
+.inf p b{color:var(--tx)}
+
+/* Tips */
+.tip{background:#fff7ed;border-left:3px solid var(--ac);border-radius:0 8px 8px 0;padding:.8rem 1rem;margin:.7rem 0;font-size:.85rem;color:var(--tx2);line-height:1.65}
+.tip b{color:var(--tx)}
+
+/* Progress */
+.prog{display:flex;align-items:center;gap:.75rem;padding:.7rem .95rem;background:var(--s1);border:1px solid var(--bd);border-radius:10px;margin-bottom:1.1rem}
+.prog-bar{flex:1;height:7px;background:var(--bd);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--ac),#ff7043);border-radius:4px;transition:width .3s}
+.prog-txt{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ac);white-space:nowrap;font-weight:500}
+
+/* Nood grid */
+.nood-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.nood-item{background:var(--s1);border:1px solid var(--bd);border-radius:8px;padding:.75rem;text-align:center}
+.nood-item .num{font-family:'Archivo Black',sans-serif;font-size:1.4rem;color:var(--rd)}
+.nood-item .lbl{font-size:.75rem;color:var(--tx2);margin-top:.15rem}
+
+.ftr{text-align:center;padding:1.75rem 1.25rem;color:var(--tx3);font-size:.75rem;border-top:1px solid var(--bd)}
+
+@media(min-width:600px){
+  .sec{padding:2rem;max-width:620px;margin-left:auto;margin-right:auto}
+  .cl{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+  .nood-grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-badge">🏍️ 10 — 17 APRIL 2026</div>
+  <h1>ENDURO<br><span>ALBANIË</span></h1>
+  <div class="hdr-meta"><b>6 man</b> · Düsseldorf → Tirana · <b>1 week</b></div>
+  <div class="hdr-sub">🎒 Backpack-only editie</div>
+</header>
+
+<nav class="tabs" id="tabs">
+  <a class="tab on" data-s="paklijst">✅ Paklijst</a>
+  <a class="tab" data-s="docs">📄 Docs</a>
+  <a class="tab" data-s="regels">⚖️ Regels</a>
+  <a class="tab" data-s="tips">💡 Tips</a>
+  <a class="tab" data-s="nood">🆘 Nood</a>
+</nav>
+
+<!-- ===== PAKLIJST ===== -->
+<div class="sec vis" id="paklijst">
+  <div class="sec-lbl">Paklijst</div>
+  <div class="sec-ttl">Alles in 1 rugtas</div>
+
+  <div class="al gn">
+    <span class="al-i">✅</span>
+    <div><b>Helm + bescherming via verhuurder</b> — hoef je niet mee te slepen. Vraag van tevoren wat ze precies leveren zodat je weet wat je evt. nog aanvult.</div>
+  </div>
+
+  <div class="prog" id="progBox">
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+    <div class="prog-txt" id="progTxt">0/0</div>
+  </div>
+
+  <div class="clg">
+    <h3>🏍️ Rijkleding</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Stevige schoenen / boots</span><span class="ch">dubbelrol!</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Enduro handschoenen</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Goggle</span><span class="ch">+ spare lens</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Stevige lange broek voor op de motor</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Lange mouwen shirt voor op de motor</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Nierband</span><span class="ch">aanrader</span></label>
+    </div>
+  </div>
+
+  <div class="clg">
+    <h3>👕 Kleding (minimaal!)</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">T-shirts (3×)</span><span class="ch">snel drogend</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Ondergoed (4×)</span><span class="ch">tussendoor wassen</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Sokken (4×)</span><span class="ch">incl. 1 dik paar</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Korte broek / zwembroek</span><span class="ch">2-in-1</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Fleece of hoodie</span><span class="ch">avonden koud</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Dunne regen-/windjack</span><span class="ch">opvouwbaar</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Buff of pet</span></label>
+    </div>
+    <div class="tip"><b>💡 Dubbel gebruik:</b> Rij-broek = avondbroek. Stevige schoenen = wandelschoenen. Zwembroek = korte broek. Hoe meer dubbelrol, hoe lichter je tas.</div>
+  </div>
+
+  <div class="clg">
+    <h3>📱 Elektronica</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Telefoon + stevige case</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Telefoonhouder motor</span><span class="ch">RAM mount</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Powerbank</span><span class="ch">10.000mAh+</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Lader + USB-kabel</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">GoPro + mount + extra accu</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">GoPro oplaadkabel</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Oordopjes</span><span class="ch">wind + slapen</span></label>
+    </div>
+  </div>
+
+  <div class="clg">
+    <h3>🔧 Tools (verdeel over de groep!)</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Multitool</span><span class="ch">1 per 2 man</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Tiewraps</span><span class="ch">1 bundel groep</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Ducttape</span><span class="ch">1 rol groep</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">IJzerdraad stukje</span><span class="ch">1× groep</span></label>
+    </div>
+    <div class="tip"><b>🤝 Verdeel groepsspullen:</b> Niet iedereen hoeft alles mee te nemen. Spreek af wie gereedschap, EHBO en ducttape draagt.</div>
+  </div>
+
+  <div class="clg">
+    <h3>🏥 EHBO & verzorging</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Mini EHBO-kit</span><span class="ch">1-2× groep</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Ibuprofen + paracetamol</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Imodium</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Pleisters</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Zonnebrand</span><span class="ch">kleine tube</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Persoonlijke medicijnen</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Tandenborstel + mini-toilettas</span></label>
+    </div>
+  </div>
+
+  <div class="clg">
+    <h3>📄 Docs & geld</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Paspoort</span><span class="ch">+ foto op tel</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Rijbewijs A</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Internationaal rijbewijs</span><span class="ch">CBR €20</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Verzekeringsbewijs</span><span class="ch">digitaal</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Betaalpas (Revolut/Wise)</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Backup pinpas</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Cash €100-150</span></label>
+    </div>
+  </div>
+
+  <div class="clg">
+    <h3>🎒 Overig</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Drybag of vuilniszak</span><span class="ch">tas droog houden</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Waterfles 1L</span><span class="ch">of camelback</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Energierepen</span><span class="ch">paar stuks</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Ziploc zakje</span><span class="ch">tel + docs droog</span></label>
+    </div>
+  </div>
+
+  <div class="al bl">
+    <span class="al-i">🎒</span>
+    <div><b>Past dit?</b> Rij-spullen heb je aan, kleding + elektronica + docs in de tas (~30L). Groepsspullen verdeeld. Schoenen aan je voeten. Moet prima lukken!</div>
+  </div>
+</div>
+
+<!-- ===== DOCS ===== -->
+<div class="sec" id="docs">
+  <div class="sec-lbl">Vooraf regelen</div>
+  <div class="sec-ttl">To-do vóór vertrek</div>
+
+  <div class="clg">
+    <h3>📋 Regel dit nú</h3>
+    <div class="cl">
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Reisverzekering afsluiten</span><span class="ch">ASAP!</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">→ Off-road motor gedekt?</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">→ Repatriëring gedekt?</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Internationaal rijbewijs aanvragen</span><span class="ch">CBR.nl</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Paspoort geldig checken (3+ mnd)</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Revolut/Wise regelen</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Offline kaarten downloaden</span><span class="ch">OsmAnd</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Wikiloc / TET routes downloaden</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Verhuurder vragen wat ze leveren</span></label>
+      <label class="ci"><input type="checkbox"><span class="cb">✓</span><span class="ct">Groepsspullen verdelen</span></label>
+    </div>
+  </div>
+
+  <div class="al rd" style="margin-top:.5rem">
+    <span class="al-i">🚨</span>
+    <div><b>Reisverzekering — #1 prioriteit</b><br>NL zorgverzekering dekt Albanië NIET (geen EU-lid). Sluit een polis af die <b>off-road motorrijden</b> dekt + medische kosten + repatriëring. Standaard polissen sluiten motorsport vaak uit!</div>
+  </div>
+
+  <div class="al bl">
+    <span class="al-i">💡</span>
+    <div><b>Internationaal rijbewijs</b><br>EU-rijbewijs wordt geaccepteerd, maar IDP voorkomt gedoe bij politie en verhuurder. ~€20 via CBR.nl.</div>
+  </div>
+
+  <div class="tip"><b>💳 Betalen:</b> Revolut/Wise = geen wisselkoersopslag. Valuta = Lek (ALL). Euro's worden geaccepteerd maar tegen slechte koers. ATM's in alle steden.</div>
+</div>
+
+<!-- ===== REGELS ===== -->
+<div class="sec" id="regels">
+  <div class="sec-lbl">Verkeersregels</div>
+  <div class="sec-ttl">Must-knows</div>
+
+  <div class="al rd">
+    <span class="al-i">🍺</span>
+    <div><b>Alcohol: 0,01‰ = NULTOLERANTIE</b><br>Eén biertje is al te veel. Boetes fors, rijbewijs kan ingenomen worden. Eerst rijden, dan drinken.</div>
+  </div>
+
+  <div class="inf">
+    <h4>🏍️ Verplicht op de motor</h4>
+    <p>Helm · Gevarendriehoek · EHBO-kit · Reflecterend vest · Overdag licht aan. Check of verhuurder dit levert.</p>
+  </div>
+
+  <div class="inf">
+    <h4>🚦 Snelheid</h4>
+    <p>Bebouwd: <b>40 km/u</b> · Buitenweg: <b>80 km/u</b> · Snelweg: <b>110 km/u</b></p>
+  </div>
+
+  <div class="inf">
+    <h4>📋 Altijd bij je</h4>
+    <p>Rijbewijs (+ IDP) · Paspoort/ID · Huurcontract · Verzekeringsbewijs</p>
+  </div>
+
+  <div class="inf">
+    <h4>⛽ Tanken</h4>
+    <p>Genoeg in laagland. Bergen: <b>50+ km</b> tot volgende pomp. Tank ALTIJD vol vóór de bergen!</p>
+  </div>
+
+  <div class="al yl">
+    <span class="al-i">⚠️</span>
+    <div><b>Albanees verkeer</b><br>Creatief rijgedrag, dieren op de weg, onverlichte voertuigen. Rij defensief, alleen overdag.</div>
+  </div>
+
+  <div class="tip"><b>📸 Motor ophalen:</b> Maak een rondje-video bij ophalen EN inleveren. Ketting, banden, krassen. Voorkomt discussie achteraf.</div>
+</div>
+
+<!-- ===== TIPS ===== -->
+<div class="sec" id="tips">
+  <div class="sec-lbl">Praktisch</div>
+  <div class="sec-ttl">Tips van riders</div>
+
+  <div class="inf">
+    <h4>📶 Lokale SIM</h4>
+    <p>Koop op Tirana airport (<b>Vodafone AL</b> of <b>One</b>). ~€5-10 voor een week data. 4G goed in steden, wisselend in bergen.</p>
+  </div>
+
+  <div class="inf">
+    <h4>🗺️ Navigatie</h4>
+    <p>Download vóór vertrek: <b>OsmAnd</b> (offline kaart) + <b>Wikiloc</b> (enduro GPX-routes). TET-website voor off-road tracks.</p>
+  </div>
+
+  <div class="inf">
+    <h4>🌤️ Weer april</h4>
+    <p>Laagland <b>15-22°C</b>, bergen <b>5-12°C</b>. Regen mogelijk. Boven 1500m kan het nat/modderig zijn.</p>
+  </div>
+
+  <div class="inf">
+    <h4>🍖 Eten</h4>
+    <p>Top + goedkoop (<b>€5-10/maaltijd</b>). Eet waar locals eten = vers. Lam, grill, vis. Drink flessenwater.</p>
+  </div>
+
+  <div class="inf">
+    <h4>🔌 Stekkers</h4>
+    <p>EU-stekkers (type C/F) — <b>geen adapter nodig</b> vanuit NL.</p>
+  </div>
+
+  <div class="tip"><b>📍 WhatsApp Live Location:</b> Deel je live locatie in de groepsapp tijdens het rijden. Zo weet iedereen waar de rest is.</div>
+
+  <div class="tip"><b>🏨 Overnachten:</b> Booking.com werkt prima. Guesthouses = persoonlijker + goedkoper (€20-40/nacht). Afgelegen gebieden: boek vooruit.</div>
+
+  <div class="tip"><b>🤝 Handig Albanees:</b> Faleminderit (bedankt) · Përshëndetje (hallo) · Mirupafshim (tot ziens) · Po (ja) · Jo (nee)</div>
+</div>
+
+<!-- ===== NOOD ===== -->
+<div class="sec" id="nood">
+  <div class="sec-lbl">Noodgevallen</div>
+  <div class="sec-ttl">Sla dit op</div>
+
+  <div class="nood-grid">
+    <div class="nood-item"><div class="num">112</div><div class="lbl">Algemeen nood</div></div>
+    <div class="nood-item"><div class="num">129</div><div class="lbl">Politie</div></div>
+    <div class="nood-item"><div class="num">128</div><div class="lbl">Brandweer</div></div>
+    <div class="nood-item"><div class="num">127</div><div class="lbl">Ambulance</div></div>
+  </div>
+
+  <div class="inf" style="margin-top:.75rem">
+    <h4>🇳🇱 NL ambassade Tirana</h4>
+    <p>Rruga Asim Zeneli 10, Tirana<br><b>Tel: +355 4 2240 828</b><br><b>Nood 24/7: +31 247 247 247</b></p>
+  </div>
+
+  <div class="inf">
+    <h4>🏥 Medische zorg</h4>
+    <p>Beperkt vergeleken met NL. Serieus letsel → repatriëring. Tirana heeft de beste faciliteiten.</p>
+  </div>
+
+  <div class="al rd">
+    <span class="al-i">⚡</span>
+    <div><b>Bij ongeluk:</b> BEL ALTIJD politie. Zonder rapport weigert de verzekering. Maak foto's van alles. Bel daarna je reisverzekering.</div>
+  </div>
+
+  <div class="inf">
+    <h4>🆘 Groeps-noodplan</h4>
+    <p>Spreek af: wie belt verzekering? Wie regelt vervoer? Foto's van elkaars paspoorten. 1 contactpersoon in NL die weet waar jullie zijn.</p>
+  </div>
+
+  <div class="tip"><b>📱</b> Screenshot deze pagina — werkt ook offline.</div>
+</div>
+
+<footer class="ftr">
+  <p>🏍️ Enduro Albanië · April 2026 · Backpack editie</p>
+  <p style="margin-top:.2rem">Ride safe · Ride hard!</p>
+</footer>
+
+<script>
+const tabs=document.querySelectorAll('.tab');
+const ids=['paklijst','docs','regels','tips','nood'];
+tabs.forEach(t=>{
+  t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    const s=t.dataset.s;
+    ids.forEach(id=>{document.getElementById(id).classList.toggle('vis',id===s)});
+    window.scrollTo({top:document.getElementById('tabs').offsetTop,behavior:'smooth'});
+  });
+});
+const cbs=document.querySelectorAll('.ci input');
+function up(){
+  const n=cbs.length,d=[...cbs].filter(c=>c.checked).length;
+  document.getElementById('progFill').style.width=Math.round(d/n*100)+'%';
+  document.getElementById('progTxt').textContent=d+'/'+n;
+}
+cbs.forEach((c,i)=>{
+  const k='eab3-'+i;
+  c.checked=localStorage.getItem(k)==='1';
+  c.addEventListener('change',()=>{localStorage.setItem(k,c.checked?'1':'0');up()});
+});
+up();
+</script>
+</body>
+</html>
