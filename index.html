@@ -219,6 +219,16 @@ body{background:var(--bg);color:var(--tx);font-family:'DM Sans',system-ui,sans-s
     </div>
   </div>
 
+  <div class="clg">
+    <h3>📝 Groeps-toevoegingen <span style="font-weight:400;font-size:.75rem;color:var(--tx3)">(iedereen kan toevoegen)</span></h3>
+    <div id="sharedItems" class="cl"></div>
+    <div style="margin-top:.5rem;display:flex;gap:.5rem">
+      <input id="newItem" type="text" placeholder="Item toevoegen voor de groep..." style="flex:1;padding:.55rem .75rem;border:1px solid var(--bd);border-radius:8px;font-size:.85rem;font-family:inherit" onkeydown="if(event.key==='Enter')addSharedItem()">
+      <input id="newItemHint" type="text" placeholder="Hint (optioneel)" style="width:120px;padding:.55rem .75rem;border:1px solid var(--bd);border-radius:8px;font-size:.85rem;font-family:inherit" onkeydown="if(event.key==='Enter')addSharedItem()">
+      <button onclick="addSharedItem()" style="padding:.55rem 1rem;background:var(--ac);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:.85rem;cursor:pointer">+</button>
+    </div>
+  </div>
+
   <div class="al bl">
     <span class="al-i">🎒</span>
     <div><b>Past dit?</b> Rij-spullen heb je aan, kleding + elektronica + docs in de tas (~30L). Groepsspullen verdeeld. Schoenen aan je voeten. Moet prima lukken!</div>
@@ -633,6 +643,44 @@ function gideonBier(){
 const style=document.createElement('style');
 style.textContent='@keyframes fadeUp{0%{opacity:0;transform:translateX(-50%) translateY(20px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1;transform:translateX(-50%) translateY(0)}100%{opacity:0;transform:translateX(-50%) translateY(-20px)}}';
 document.head.appendChild(style);
+
+// === SHARED PAKLIJST (FIREBASE) ===
+db.ref('paklijst').on('value',snap=>{
+  const items=snap.val()||{};
+  const el=document.getElementById('sharedItems');
+  if(!el)return;
+  const keys=Object.keys(items);
+  if(keys.length===0){el.innerHTML='<div style="padding:.5rem;color:var(--tx3);font-size:.82rem;font-style:italic">Nog geen items toegevoegd. Voeg hieronder iets toe!</div>';return;}
+  el.innerHTML=keys.map(k=>{
+    const it=items[k];
+    return `<label class="ci" style="background:#fff7ed;border-color:#fed7aa">
+      <input type="checkbox" onchange="toggleSharedItem('${k}',this.checked)"><span class="cb">✓</span>
+      <span class="ct">${it.name}</span>
+      ${it.hint?'<span class="ch">'+it.hint+'</span>':''}
+      <span style="font-size:.65rem;color:var(--tx3);margin-left:.3rem">— ${it.by||'?'}</span>
+      <button onclick="event.preventDefault();event.stopPropagation();removeSharedItem('${k}')" style="background:none;border:none;color:#ccc;cursor:pointer;font-size:.7rem;margin-left:.3rem" title="Verwijder">✕</button>
+    </label>`;
+  }).join('');
+  // restore local check state for shared items
+  keys.forEach(k=>{
+    const cb=el.querySelector('input[onchange*="'+k+'"]');
+    if(cb)cb.checked=localStorage.getItem('si-'+k)==='1';
+  });
+});
+
+function addSharedItem(){
+  const nameEl=document.getElementById('newItem');
+  const hintEl=document.getElementById('newItemHint');
+  const name=nameEl.value.trim();
+  if(!name)return;
+  const hint=hintEl.value.trim();
+  const by=prompt('Je naam?')||'Anoniem';
+  db.ref('paklijst').push({name,hint,by,ts:Date.now()});
+  nameEl.value='';hintEl.value='';
+}
+
+function toggleSharedItem(k,checked){localStorage.setItem('si-'+k,checked?'1':'0');up();}
+function removeSharedItem(k){db.ref('paklijst/'+k).remove();}
 
 // === COUNTDOWN ===
 function updateCountdown(){
